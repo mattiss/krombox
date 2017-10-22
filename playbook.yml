@@ -1,27 +1,37 @@
 ---
  
-- name: Install HTPC
+- name: Install Krombox
   hosts: sandbox
   remote_user: mattiss
   become: false
   become_method: sudo
 
   vars:
-    user_bin_directory: "{{ ansible_env.HOME }}/bin"
+    - user_bin_directory: "{{ ansible_env.HOME }}/bin"
+    - nas_server: bananas
+
+  # tasks:
+  #   - name: "Build hosts file"
+  #   lineinfile: dest=/etc/hosts 
+  #               state=present
+  #               dest=/etc/hosts 
+  #               regexp='.*{{ item.name }}$' line="{{ item.ip }} {{item.name}}" 
+  #   with_items: "{{ nas_servers }}"  
   
   roles:
     - role: autofs
-      sudo: yes
+      become: yes
       autofs_indirect_maps:
-        - name: auto.bananas
-          path: /mnt/bananas
+        - name: auto.{{ nas_server }}
+          path: /mnt/{{ nas_server }}
           mounts:
             - name: "*"
-              url: "bananas:/volume1/&"	  
-    - powershell
-    - vpn
-    - molotov.tv
-    - kodi	
-    - dolphin	
-    - steam
-    - caffeine
+              url: "{{ nas_server }}:/volume1/&"	
+    # - powershell
+    # - vpn
+    # - molotov.tv
+    # - kodi	
+    # - dolphin	
+    # - steam
+    # - caffeine
+
