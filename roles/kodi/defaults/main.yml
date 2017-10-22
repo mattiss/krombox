@@ -1,0 +1,23 @@
+---
+# kodi variables
+
+kodi_repository: [ 'ppa:team-xbmc/ppa' ]
+# kodi_repository: [ 'ppa:team-xbmc/unstable' ]
+
+kodi_pkgs: [ 'software-properties-common', 'kodi', 'kodi-pvr-iptvsimple' ]
+
+kodi_conf_dir: ~/.kodi
+
+kodi_source_files: []
+kodi_source_pictures: []
+kodi_source_programs: []
+# kodi_source_music: []
+# kodi_source_videos: []
+
+# Optional settings (Not defined by default)
+kodi_advanced_settings: |
+  <network>
+    <buffermode>1</buffermode>
+    <cachemembuffersize>209715200</cachemembuffersize>
+    <readbufferfactor>10</readbufferfactor>
+  </network>'

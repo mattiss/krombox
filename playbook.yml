@@ -27,10 +27,12 @@
           mounts:
             - name: "*"
               url: "{{ nas_server }}:/volume1/&"	
+    - role: kodi
+      kodi_source_music: [ '/mnt/{{ nas_server }}/music' ]
+      kodi_source_videos: [ '/mnt/{{ nas_server }}/video/movies', '/mnt/{{ nas_server }}/video/flims', '/mnt/{{ nas_server }}/kids', '/mnt/{{ nas_server }}/downloads' ]
+    - molotov.tv
     # - powershell
     # - vpn
-    # - molotov.tv
-    # - kodi	
     # - dolphin	
     # - steam
     # - caffeine

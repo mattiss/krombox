@@ -1,0 +1,7 @@
+<!-- {{ ansible_managed }} -->
+
+<advancedsettings>
+{% if kodi_advanced_settings is defined %}
+  {{ kodi_advanced_settings }}
+{% endif %}
+</advancedsettings>
