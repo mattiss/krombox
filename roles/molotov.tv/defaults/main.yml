@@ -1,0 +1,12 @@
+---
+
+# "https://www.molotov.tv/download" 
+
+molotov_version: "1.8.0"
+molotov_application: "molotov"
+molotov_download_base_url: "https://desktop-auto-upgrade.s3.amazonaws.com/linux"
+
+molotov_download_url: "{{ molotov_download_base_url }}/{{ molotov_version }}/{{ molotov_application }}"
+
+molotov_directory: "/opt/molotov"
+molotov_icon_file: "molotov.png"

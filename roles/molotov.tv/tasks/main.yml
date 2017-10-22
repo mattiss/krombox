@@ -1,0 +1,22 @@
+---
+
+- name: "Ensure the molotov directory is present"
+  file: path="{{ molotov_directory }}" state=directory owner="{{ ansible_user_id }}" group="{{ ansible_user_id }}"
+  become: true
+  
+- name: "Download molotov.tv"
+  get_url:
+    url: "{{ molotov_download_url }}"
+    dest: "{{ molotov_directory }}"
+    mode: "a=rx"  
+
+- name: "Create launcher script"
+  template: 
+    src: launch_molotov.sh.j2
+    dest: "{{ molotov_directory }}/launch_molotov.sh"
+    owner: "{{ ansible_user_id }}"
+    group: "{{ ansible_user_id }}"
+    mode: "a=rx"
+
+- name: "Copy icon file"
+  copy: src="{{ molotov_icon_file }}" dest="{{ molotov_directory }}/{{ molotov_icon_file }}"
