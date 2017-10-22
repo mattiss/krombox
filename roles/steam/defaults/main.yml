@@ -1,0 +1,6 @@
+---
+# steam variables
+
+steam_repository: [ 'multiverse' ]
+
+steam_pkgs: [ 'steam']

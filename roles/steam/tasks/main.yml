@@ -1,0 +1,18 @@
+---
+
+# - name: "Ensure steam repository is present"
+  # apt_repository: repo="{{ item }}"
+# #  add_ppa: name="{{ item }}"
+  # with_items: "{{ steam_repository }}"
+  # become: true
+  
+- name: "Accept steam license"
+  debconf: name='steam' question='steam/question' value='I AGREE' vtype='select'
+  # echo 'steam steam/question select I AGREE' | sudo debconf-set-selections
+  # echo 'steam steam/licence note ' | sudo debconf-set-selections
+  become: true
+ 
+- name: "Ensure steam package(s) present"
+  apt: name="{{ item }}" update_cache=yes state=latest
+  with_items: "{{ steam_pkgs }}"
+  become: true
