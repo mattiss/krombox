@@ -1,0 +1,13 @@
+---
+
+- name: "Ensure dolphin repository is present"
+#  apt_repository: repo="{{ item }}"
+  add_ppa: name="{{ item }}"
+  with_items: "{{ dolphin_repository }}"
+  become: true
+  
+- name: "Ensure dolphin package(s) present"
+  apt: name="{{ item }}" update_cache=yes state=latest
+  with_items: "{{ dolphin_pkgs }}"
+  become: true
+

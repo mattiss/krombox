@@ -1,0 +1,6 @@
+---
+# dolphin variables
+
+dolphin_repository: [ 'ppa:dolphin-emu/ppa' ]
+
+dolphin_pkgs: [ 'dolphin-emu']
