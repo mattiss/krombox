@@ -1,0 +1,5 @@
+---
+
+- name: "Restart autofs service"
+  service: name=autofs state=restarted
+  become: true

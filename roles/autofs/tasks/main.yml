@@ -1,0 +1,30 @@
+---
+
+# ----- Setup -----
+- name: "Ensure autofs's package(s) present"
+  apt: name="{{ item }}" update_cache=yes
+  become: true
+  with_items: "{{ autofs_pkgs }}"
+
+# ----- Config -----
+- name: "Ensure indirect map paths(s) exist"
+  file: path="{{ item.path }}" state=directory
+  become: true
+  with_items: "{{ autofs_indirect_maps }}"
+
+- name: "Create indirect map file(s) from template"
+  template: src="indirect_map.j2" dest="/etc/{{ item.name }}" mode=0644
+  with_items: "{{ autofs_indirect_maps }}"
+  become: true
+  notify: [ 'Restart autofs service' ]
+
+- name: "Add indirect map file(s) to autofs master file"
+  lineinfile: dest="{{ autofs_master }}" line="{{ item.path }}     {{ item.name }}"
+  become: true
+  with_items: "{{ autofs_indirect_maps }}"
+  notify: [ 'Restart autofs service' ]
+
+# ----- Service -----
+- name: "Ensure autofs starts at boot"
+  service: name=autofs state=started enabled=yes
+  become: true

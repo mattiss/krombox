@@ -10,11 +10,18 @@
     user_bin_directory: "{{ ansible_env.HOME }}/bin"
   
   roles:
-    - caffeine
-    - autofs
+    - role: autofs
+      sudo: yes
+      autofs_indirect_maps:
+        - name: auto.bananas
+          path: /mnt/bananas
+          mounts:
+            - name: "*"
+              url: "bananas:/volume1/&"	  
+    - powershell
     - vpn
     - molotov.tv
-    - powershell
     - kodi	
     - dolphin	
     - steam
+    - caffeine

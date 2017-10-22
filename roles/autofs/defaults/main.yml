@@ -1,0 +1,6 @@
+---
+# autofs variables
+
+autofs_pkgs: [ 'autofs', 'nfs-common']
+
+autofs_master: "/etc/auto.master"
