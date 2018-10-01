@@ -1,0 +1,11 @@
+---
+
+# ----- Setup -----
+- name: "Make sure snap package manager is installed"
+  apt: name="{{ item }}" update_cache=yes
+  with_items: "{{ snap_pkgs }}"
+  become: true
+
+- name: "Deploy powershell snap"
+  command: snap install {{ powershell_snap }}
+  become: true

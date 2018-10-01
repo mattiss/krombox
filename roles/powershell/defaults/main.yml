@@ -1,0 +1,7 @@
+---
+# powershell variables
+
+snap_pkgs: [ 'snapd' ]
+
+powershell_snap: 'powershell --classic'
+
