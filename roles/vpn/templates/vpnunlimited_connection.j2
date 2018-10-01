@@ -1,0 +1,37 @@
+[connection]
+id={{ item.server }}
+uuid={{ item.uuid }}
+type=vpn
+permissions=
+secondaries=
+timestamp=1479587166
+
+[vpn]
+remote-random=yes
+ping=5
+connection-type=tls
+remote={{ item.server }}
+comp-lzo=yes
+reneg-seconds=0
+cert-pass-flags=0
+ns-cert-type=server
+dev-type=tun
+ping-exit=30
+cert={{ vpnunlimited.cert }}
+ca={{ vpnunlimited.ca }}
+key={{ vpnunlimited.key }}
+dev=tun
+service-type=org.freedesktop.NetworkManager.openvpn
+
+[vpn-secrets]
+cert-pass={{ vpnunlimited.certpass }}
+
+[ipv4]
+dns-search=
+method=auto
+
+[ipv6]
+addr-gen-mode=stable-privacy
+dns-search=
+ip6-privacy=0
+method=auto

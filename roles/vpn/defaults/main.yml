@@ -1,0 +1,6 @@
+---
+# vpn variables
+
+vpn_pkgs: [ 'network-manager' ]
+
+vpn_scripts_directory: "{{ user_bin_directory }}/vpn"

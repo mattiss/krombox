@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# Check if the vpn is on.
+isVPNOn=`cat /proc/net/route | grep tun0`
+
+# Process results and compute logic.
+if [[ (-n "${isVPNOn}") ]]; then
+	echo VPN is on already
+else
+	echo Turning VPN on
+	nmcli con up id {{ vpn_default_connection }}
+fi
+
+# End of file marker.
+#eof

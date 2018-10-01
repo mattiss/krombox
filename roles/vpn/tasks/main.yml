@@ -1,0 +1,47 @@
+---
+
+# ----- Setup -----
+- name: "Ensure vpn's package(s) present"
+  apt: name="{{ item }}" update_cache=yes
+  with_items: "{{ vpn_pkgs }}"
+  become: true
+  
+- name: "Ensure the system-connections directory is present"
+  file: path=/etc/NetworkManager/system-connections state=directory
+  become: true
+
+# http://stackoverflow.com/questions/28408856/how-to-create-vpn-pptp-connection-using-nmcli-in-linux
+- name: "Create vpnunlimited connections"
+  template:     
+    src: vpnunlimited_connection.j2
+    dest: /etc/NetworkManager/system-connections/{{ item.server }}
+    owner: root
+    group: root
+    mode: '0600'
+  with_items: "{{ vpnunlimited.connections }}"
+  become: true
+  notify:
+  - restart network-manager
+  
+- name: ansible_env.HOME
+  debug: var="{{ '{{' }} ansible_env.HOME {{ '}}' }}"
+  
+- name: "Copy vpnunlimited security certificates"
+  copy: src=.cert dest="{{ ansible_env.HOME }}" owner="{{ ansible_user_id }}" group="{{ ansible_user_id }}"
+  notify:
+  - restart network-manager
+
+- name: "Ensure the home/user/bin directory is present"
+  file: path="{{ user_bin_directory }}" state=directory owner="{{ ansible_user_id }}" group="{{ ansible_user_id }}"
+  
+- name: "Copy vpn scripts icons and folder structure"
+  copy: src=vpn dest="{{ user_bin_directory }}/" owner="{{ ansible_user_id }}" group="{{ ansible_user_id }}"
+  
+- name: "Create vpn scripts"
+  template:     
+    src: "{{ item }}.j2"
+    dest: "{{ vpn_scripts_directory }}/{{ item }}"
+    owner: "{{ ansible_user_id }}"
+    group: "{{ ansible_user_id }}"
+    mode: 'a=rx'
+  with_items: [ turn_vpn_on.sh, turn_vpn_off.sh ]
