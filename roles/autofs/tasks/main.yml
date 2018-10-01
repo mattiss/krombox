@@ -19,7 +19,7 @@
   notify: [ 'Restart autofs service' ]
 
 - name: "Add indirect map file(s) to autofs master file"
-  lineinfile: dest="{{ autofs_master }}" line="{{ item.path }}     {{ item.name }}"
+  lineinfile: dest="{{ autofs_master }}" line="{{ item.path }}     /etc/{{ item.name }}"
   become: true
   with_items: "{{ autofs_indirect_maps }}"
   notify: [ 'Restart autofs service' ]

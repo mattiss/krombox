@@ -3,5 +3,5 @@
 #https://help.ubuntu.com/community/Autofs
 
 {% for mount in item.mounts %}
-{{ mount.name }} {{ mount.url }}
+{{ mount.name }} {{ mount.options }} {{ mount.url }}
 {% endfor %}
