@@ -1,0 +1,12 @@
+---
+# acestreamplayer variables
+# https://www.cnx-software.com/2018/04/15/how-to-install-and-use-acestream-easily-in-ubuntu-mint-linux/
+
+snap_pkgs: [ 'snapd' ]
+
+acestreamplayer_snap: 'acestreamplayer'
+
+bash_aliases_path: "~/.bash_aliases"
+
+acestreamplayer_aliases:
+  - { alias: 'ace', command: '/snap/bin/acestreamplayer.engine --client-console' }

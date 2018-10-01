@@ -1,0 +1,20 @@
+---
+
+# ----- Setup -----
+- name: "Make sure snap package manager is installed"
+  apt: name="{{ item }}" update_cache=yes
+  with_items: "{{ snap_pkgs }}"
+  become: true
+
+- name: "Deploy acestreamplayer snap"
+  command: snap install {{ acestreamplayer_snap }}
+  become: true
+
+- name: "Create acestreamplayer aliases"
+  lineinfile:
+    dest: "{{ bash_aliases_path }}"
+    create: yes
+    mode: 0644
+    line: 'alias {{ item.alias }}="{{ item.command }}"'
+    regexp: "^alias {{ item.alias }}="
+  with_items: "{{ acestreamplayer_aliases }}"
