@@ -8,13 +8,15 @@
     name: "{{ item }}"
     state: present
     update_cache: yes
-  with_items: "{{ kodi_pkgs }}"
+  with_items: "{{ docker_pkgs }}"
+  become: true
      
 # curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 - name: Add Docker s official GPG key
   apt_key:
     url: "{{ docker_key }}"
     state: present
+  become: true
      
 # sudo apt-key fingerprint 0EBFCD88
 - name: Verify that we have the key with the fingerprint
@@ -28,11 +30,13 @@
     repo: deb [arch=amd64] {{ docker_repository }}
     state: present
     update_cache: yes
+  become: true
      
 # sudo apt-get update
 - name: Update apt packages
   apt:
     update_cache: yes
+  become: true
     
 # sudo apt-get install docker-ce=18.03.*
 - name: Install docker
@@ -40,6 +44,7 @@
     name: "{{ docker_version }}"
     state: present
     update_cache: yes
+  become: true
   notify: Start docker on boot
      
 # sudo groupadd docker
@@ -47,13 +52,15 @@
   group:
     name: "{{ docker_group }}"
     state: present
+  become: true
      
 # sudo usermod -aG docker ubuntu
 - name: Add remote "ubuntu" user to "docker" group
   user:
-    name: "{{ docker_user }}"
+    name: "{{ remote_user }}"
     group: "{{ docker_group }}"
     append: yes
+  become: true
      
 # sudo apt-get install docker-compose=1.8.*
 - name: Install docker-compose
@@ -61,4 +68,5 @@
     name: "{{ docker_compose_version }}"
     state: present
     update_cache: yes
+  become: true
     

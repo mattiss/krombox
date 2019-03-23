@@ -4,11 +4,10 @@
 docker_pkgs: [ 'apt-transport-https', 'ca-certificates', 'curl', 'software-properties-common' ]
 docker_key: 'https://download.docker.com/linux/ubuntu/gpg'
 
-docker_repository: 'https://download.docker.com/linux/ubuntu xenial stable'
-#docker_version: 'docker-ce'
-docker_version: 'docker-ce=18.03.*'
-#docker_compose_version: 'docker-compose=1.8.*'
+docker_repository: 'https://download.docker.com/linux/ubuntu bionic stable'
+docker_version: 'docker-ce'
 docker_compose_version: 'docker-compose'
+#docker_version: 'docker-ce=18.03.*'
+#docker_compose_version: 'docker-compose=1.8.*'
 
-docker_user: mattiss
 docker_group: docker
