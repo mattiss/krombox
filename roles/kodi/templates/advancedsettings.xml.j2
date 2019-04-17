@@ -4,4 +4,24 @@
 {% if kodi_advanced_settings is defined %}
   {{ kodi_advanced_settings }}
 {% endif %}
+{% if kodi_mysql_server is defined %}
+  <videodatabase>
+    <type>mysql</type>
+    <host>{{ kodi_mysql_server }}</host>
+    <port>3306</port>
+    <user>kodi</user>
+    <pass>kodi</pass>
+  </videodatabase> 
+  <musicdatabase>
+    <type>mysql</type>
+    <host>{{ kodi_mysql_server }}</host>
+    <port>3306</port>
+    <user>kodi</user>
+    <pass>kodi</pass>
+  </musicdatabase>
+  <videolibrary>
+    <importwatchedstate>true</importwatchedstate>
+    <importresumepoint>true</importresumepoint>
+  </videolibrary>
+{% endif %}
 </advancedsettings>

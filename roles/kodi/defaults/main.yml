@@ -15,9 +15,10 @@ kodi_source_programs: []
 # kodi_source_videos: []
 
 # Optional settings (Not defined by default)
+kodi_mysql_server: bananas
 kodi_advanced_settings: |
   <network>
     <buffermode>1</buffermode>
     <cachemembuffersize>209715200</cachemembuffersize>
     <readbufferfactor>10</readbufferfactor>
-  </network>'
+  </network>

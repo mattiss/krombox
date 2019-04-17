@@ -1,0 +1,7 @@
+---
+# powershell variables
+
+snap_pkgs: [ 'snapd' ]
+
+vscode_snap: 'vscode --classic'
+
