@@ -5,6 +5,8 @@
   apt: name="{{ item }}" update_cache=yes
   with_items: "{{ snap_pkgs }}"
   become: true
+  environment:
+    PATH: $PATH:/SNAP/node/bin
 
 - name: "Deploy vscode snap"
   command: snap install {{ vscode_snap }}
