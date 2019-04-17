@@ -36,12 +36,22 @@
       kodi_source_music: [ '/mnt/{{ nas_server }}/music' ]
       kodi_source_videos: [ '/mnt/{{ nas_server }}/video/movies', '/mnt/{{ nas_server }}/video/flims', '/mnt/{{ nas_server }}/kids', '/mnt/{{ nas_server }}/downloads' ]      
     - molotov.tv
+<<<<<<< HEAD
     # - caffeine
+=======
+>>>>>>> 52f2558a247f926f8ab979a19d756cecfec5f32d
     - role: acestreamplayer
     - role: powershell
     - role: vscode
       tags: 'test'
+<<<<<<< HEAD
     - role: vpn
+=======
+    - role: docker
+      vars:
+        - remote_user: mattiss
+      tags: 'docker'
+>>>>>>> 52f2558a247f926f8ab979a19d756cecfec5f32d
     # - dolphin	
     # - steam
 

@@ -35,7 +35,7 @@ On Host:
 ```
 cd /mnt/c/Dev/krombox/
 ansible-playbook -i inventory.ini playbook.yml --ask-become-pass
-ansible-playbook -i "localhost," -c local debug.yml
+ansible-playbook -i "localhost," -c local playbook.yml --tags "docker" --extra-vars "ansible_become_pass=********"
 ansible-playbook -i "mintyfresh-vm," playbook.yml --tags "test" --extra-vars "ansible_become_pass=********" 
 ```
 
