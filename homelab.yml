@@ -1,0 +1,105 @@
+---
+ 
+- name: Install homelab
+  hosts: all
+  remote_user: mattiss
+  become: false
+  become_method: sudo
+
+  vars:
+    - nas_server: bananas.home
+    - docker_pip_executable: '{{ pip_executable }}'
+    - pip_install_packages: 
+        - name: docker-compose
+    - ansible_python_interpreter: /usr/bin/python3
+
+  roles:
+      - role: geerlingguy.pip
+        become: yes
+      - role: geerlingguy.docker
+        become: yes
+      - role: autofs
+        become: yes
+        autofs_indirect_maps:
+          - name: auto.{{ nas_server }}
+            path: /mnt/{{ nas_server }}
+            mounts:
+              - name: "*"
+                options: "-vers=3"
+                url: "{{ nas_server }}:/volume1/&"
+
+  tasks:
+    - name: Install some useful packages
+      become: true
+      apt:
+        name:
+          - unattended-upgrades 
+          - apt-listchanges
+          - command-not-found
+          - apt-file
+        state: latest
+        update_cache: true
+
+
+    - name: Create homelab network
+      become: true
+      docker_network:
+        name: homelab
+
+    - name: Create {{ nas_server }} volumes
+      become: true
+      docker_volume:
+        name: bananas_downloads
+        driver_options:
+          type: nfs
+          o: "addr={{ nas_server }},rw"
+          device: ":/volume1/downloads"
+  
+    - name: Create portainer data volume
+      become: true
+      docker_volume:
+        name: portainer_data  
+
+    - name: Create portainer container
+      become: true
+      docker_container:
+        image: portainer/portainer-ce:2.0.0-alpine
+        name: portainer
+        restart_policy: unless-stopped
+        volumes:
+          - /var/run/docker.sock:/var/run/docker.sock
+          - portainer_data:/data
+        networks:
+          - name: homelab
+        purge_networks: yes
+        labels:
+          traefik.http.routers.portainer.rule: "Host(`portainer.{{ inventory_hostname }}`)"
+          traefik.http.services.portainer.loadbalancer.server.port: "9000"
+          traefik.http.routers.portainer.entrypoints: "web"
+          traefik.docker.network: "homelab"
+          traefik.enable: "true"
+        state: started
+        restart: yes
+
+    - name: Create traefik container
+      become: true
+      docker_container:
+        image: traefik:v2.3
+        name: traefik
+        restart_policy: unless-stopped
+        command: 
+          #- "--log.level=DEBUG"
+          - "--api.insecure=true"
+          - "--providers.docker=true"
+          - "--providers.docker.exposedbydefault=false"
+          - "--entrypoints.web.address=:80"
+        ports:
+          - 80:80
+          - 8080:8080
+        volumes:
+          - /var/run/docker.sock:/var/run/docker.sock
+        networks:
+          - name: homelab
+        purge_networks: yes
+        state: started
+        restart: yes
