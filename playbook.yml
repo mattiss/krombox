@@ -10,8 +10,8 @@
     - user_bin_directory: "{{ ansible_env.HOME }}/bin"
     - additional_hosts:
       - name: bananas
-        ip: 192.168.1.19
-    - nas_server: bananas.home
+        ip: 192.168.0.12
+    - nas_server: bananas
 
   pre_tasks:
     - name: "Build hosts file"
